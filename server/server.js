@@ -38,7 +38,9 @@ app.post('/login', (req, res) => {
     req.session.username = username;
     console.log(req.session.username); 
 
-    if (req.session.username === myData[0].username) {
+    const findUserData = myData(data => data.username === req.session.username);
+
+    if (req.session.username === findUserData) {
         return res.json({myData})
     }
 })
