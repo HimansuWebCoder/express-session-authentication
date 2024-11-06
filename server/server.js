@@ -29,9 +29,8 @@ const myData = [
 app.post('/signup', (req, res) => {
    const { username } = req.body;
    req.session.user = username;
-   req.session.email = email;
-   req.session.password = password;
-   return res.json(userData);
+   myData.push(username);
+   return res.json(myData);
 })
 
 app.post('/login', (req, res) => {

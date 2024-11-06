@@ -4,23 +4,60 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>login</title>
+   <style>
+      #login-box {
+         max-width: 400px;
+         height: auto;
+         padding: 10px;
+         border:1px solid black;
+         margin-top: 0;
+      }
+
+      #signup-box {
+         max-width: 400px;
+         height: auto;
+         padding: 10px;
+         border:1px solid black;
+         margin-top: 30px;
+      }
+   </style>
 </head>
 <body>
-    <input type="text" />
-    <button>login</button>
+    <div id="signup-box">
+    <input id="signup" type="text" />
+    <button id="signup-btn">signup</button>
+   </div>
+
+   <div id="login-box">
+    <input id="login" type="text" />
+    <button id="login-btn">login</button>
     <button id="fetch-btn">fetch data</button>
     <h1></h1>
+   </div>
+
 
    <script>
-   	const userInput = document.querySelector("input")
-      const loginBtn = document.querySelector("button");
+      const signupInput = document.querySelector("#signup")
+   	const loginInput = document.querySelector("#login")
+      const signupBtn = document.querySelector("#signup-btn");
+      const loginBtn = document.querySelector("#login-btn");
       const fetchBtn = document.querySelector("#fetch-btn");
+
+
+       signupBtn.addEventListener("click", () => {
+         fetch("http://localhost:3000/signup", {
+            method: "post",
+            headers: {"Content-Type": "application/json"},
+            body:JSON.stringify({username: signupInput.value}),
+            credentials: 'include'
+         })
+      })
 
       loginBtn.addEventListener("click", () => {
          fetch("http://localhost:3000/login", {
             method: "post",
             headers: {"Content-Type": "application/json"},
-            body:JSON.stringify({username: userInput.value}),
+            body:JSON.stringify({username: loginInput.value}),
             credentials: 'include'
          })
          .then(res => res.json())
