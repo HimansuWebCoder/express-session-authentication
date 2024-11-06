@@ -43,8 +43,6 @@
       const loginBtn = document.querySelector("#login-btn");
       const fetchBtn = document.querySelector("#fetch-btn");
 
-      const userData = [];
-
 
        signupBtn.addEventListener("click", () => {
          fetch("http://localhost:3000/signup", {
@@ -52,6 +50,10 @@
             headers: {"Content-Type": "application/json"},
             body:JSON.stringify({username: signupInput.value}),
             credentials: 'include'
+         })
+         .then(res => res.json())
+         .then((result) => {
+            console.log(result)
          })
       })
 
@@ -64,7 +66,7 @@
          })
          .then(res => res.json())
          .then(result => {
-            console.log("login successfully")
+            console.log(result)
          })
       })
 
@@ -75,12 +77,7 @@
          })
            .then(res => res.json())
            .then(data => {
-            const heading = document.querySelector("h1");
-            userData.push(data);
-            // heading.textContent = data[0].username;
-            heading.textContent = userData;
             console.log(data);
-            console.log(userData)
            })
       })
       

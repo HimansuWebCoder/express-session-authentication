@@ -22,15 +22,18 @@ app.use(cors(corsOptions))
 const myData = [
         {
             username: "boss",
-            password: "123"
+            password: "123",
+            age: 22,
+            passion: 'web development',
         }
     ]
 
 app.post('/signup', (req, res) => {
    const { username } = req.body;
    req.session.user = username;
-   myData.push(username);
-   return res.json(myData);
+   myData.push({username: username});
+   // return res.json(myData);
+   return res.json("signup successfully");
 })
 
 app.post('/login', (req, res) => {
@@ -38,18 +41,22 @@ app.post('/login', (req, res) => {
     req.session.username = username;
     console.log(req.session.username); 
 
-    const findUserData = myData(data => data.username === req.session.username);
+    const findUserData = myData.find(data => req.session.username === data.username );
 
-    if (req.session.username === findUserData) {
-        return res.json({myData})
+    if (findUserData) {
+        // return res.json(findUserData)
+        return res.json("Login successfully")
+    } else {
+        return res.json("Invalid username")
     }
 })
 
 app.get('/data', (req, res) => {
-    const username = req.session.username;
-    if(username) {
-        console.log(myData)
-        return res.json(myData)
+    const findUserData = myData.find(data => req.session.username === data.username);
+
+    if(findUserData) {
+        console.log(findUserData)
+        return res.json(findUserData)
     } else {
         return res.json("need login")
     }
