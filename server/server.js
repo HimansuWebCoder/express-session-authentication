@@ -67,12 +67,45 @@ app.post('/login', (req, res) => {
     // const findUserData = myData.find(data => req.session.username === data.username );
     const findTodo = db("todos").where({title: req.session.todo}).first();
 
-    if (findTodo) {
-        // return res.json(findUserData)
-        return res.json("Login successfully")
-    } else {
-        return res.json("Invalid username")
-    }
+//     findTodo.then(findtodo => {
+//   if (findtodo) {
+//     db("todos")
+//       .select("todo")
+//       .where({ title: findtodo.title })  // Use the resolved value's property
+//       .then(data => {
+//         return res.json(data);
+//       })
+//       .catch(error => {
+//         console.error(error);
+//         return res.status(500).json({ error: "Database query error" });
+//       });
+//   } else {
+//     return res.json("Invalid todo");
+//   }
+// });
+
+
+    // findTodo.then((findtodo) => )
+
+    findTodo.then(findtodo => {
+        if (findtodo) {
+            db("todos").select("*").where({title: findtodo.title})
+               .then(data => {
+                return res.json(data)
+               })
+        }
+    })
+
+    // if (findTodo) {
+    //     // return res.json(findUserData)
+    //     // return res.json("Login successfully")
+    //     db("todos").select("todo").where(findTodo)
+    //       .then(data => {
+    //         return res.json(data);
+    //       })
+    // } else {
+    //     return res.json("Invalid username")
+    // }
 })
 
 app.get('/data', (req, res) => {
